@@ -1,0 +1,20 @@
+{
+  "name": "babel-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.16.12",
+    "@babel/generator": "^7.16.8",
+    "@babel/parser": "^7.16.12",
+    "@babel/template": "^7.16.7",
+    "@babel/traverse": "^7.16.10",
+    "@babel/types": "^7.16.8"
+  }
+}
