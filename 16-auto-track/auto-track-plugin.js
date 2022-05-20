@@ -1,6 +1,9 @@
+const { declare } = require('@babel/helper-plugin-utils');
 const importModule = require('@babel/helper-module-imports');
 
-module.exports = function (api, options) {
+const autoTrackPlugin = declare((api, options) => {
+  api.assertVersion(7);
+
   return {
     visitor: {
       Program(path, state) {
@@ -37,11 +40,15 @@ module.exports = function (api, options) {
           // debugger
           bodyPath.node.body.unshift(state.trackerAST);
         } else {
-          const ast = api.template.statement(`{${state.trackerImportId}();return PREV_BODY;}`)({PREV_BODY: bodyPath.node});
-          
+          const ast = api.template.statement(`{${state.trackerImportId}();return PREV_BODY;}`)({
+            PREV_BODY: bodyPath.node,
+          });
+
           bodyPath.replaceWith(ast);
         }
       },
     },
   };
-};
+});
+
+module.exports = autoTrackPlugin;
