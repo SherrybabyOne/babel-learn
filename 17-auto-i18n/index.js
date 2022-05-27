@@ -20,7 +20,6 @@ const { code } = transformSync(sourceCode, {
       },
     ],
   ],
-  sourceType: 'unambiguous',
 });
 
 console.log(code);
