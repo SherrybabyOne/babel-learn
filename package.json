@@ -18,6 +18,7 @@
     "@babel/template": "^7.16.7",
     "@babel/traverse": "^7.16.10",
     "@babel/types": "^7.16.8",
+    "chalk": "4",
     "doctrine": "^3.0.0",
     "fs-extra": "^10.1.0"
   },
