@@ -1,4 +1,5 @@
 const types = require('../../types');
+const Scope = require('./Scope');
 
 class NodePath {
   constructor(node, parent, parentPath, key, listKey) {
@@ -10,7 +11,7 @@ class NodePath {
 
     Object.keys(types).forEach(key => {
       if (key.startsWith('is')) {
-        this[key] = types[key].bind(this.find, node);
+        this[key] = types[key].bind(this, node);
       }
     });
   }
@@ -103,6 +104,27 @@ class NodePath {
   // toString() {
   //   return generate(this.node).code;
   // }
+
+  /**
+   * 是否是块作用域
+   */
+  isBlock() {
+    return types.visitorKeys.get(this.node.type).isBlock;
+  }
+
+  /**
+   * 当需要用到 scope 的时候才会创建，因为 scope 创建之后还要遍历查找 bindings，是比较耗时的
+   */
+  get scope() {
+    if (this.__scope) {
+      return this.__scope;
+    }
+
+    const isBlock = this.isBlock();
+    const parentScope = this.parentPath && this.parentPath.scope;
+
+    return isBlock ? new Scope(parentScope, this) : parentScope;
+  }
 }
 
 module.exports = NodePath;

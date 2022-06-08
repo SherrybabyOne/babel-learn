@@ -1,46 +1,47 @@
-const astDefinationsMap = new Map();
+// 维护数据：不同的 AST 有哪些可以遍历的属性
+const astDefinitionsMap = new Map();
 
-astDefinationsMap.set('Program', {
+astDefinitionsMap.set('Program', {
   visitor: ['body'],
   isBlock: true,
 });
-astDefinationsMap.set('VariableDeclaration', {
+astDefinitionsMap.set('VariableDeclaration', {
   visitor: ['declarations'],
 });
-astDefinationsMap.set('VariableDeclarator', {
+astDefinitionsMap.set('VariableDeclarator', {
   visitor: ['id', 'init'],
 });
-astDefinationsMap.set('Identifier', {});
-astDefinationsMap.set('NumericLiteral', {});
-astDefinationsMap.set('FunctionDeclaration', {
+astDefinitionsMap.set('Identifier', {});
+astDefinitionsMap.set('NumericLiteral', {});
+astDefinitionsMap.set('FunctionDeclaration', {
   visitor: ['id', 'params', 'body'],
   isBlock: true,
 });
-astDefinationsMap.set('BlockStatement', {
+astDefinitionsMap.set('BlockStatement', {
   visitor: ['body'],
 });
-astDefinationsMap.set('ReturnStatement', {
+astDefinitionsMap.set('ReturnStatement', {
   visitor: ['argument'],
 });
-astDefinationsMap.set('BinaryExpression', {
+astDefinitionsMap.set('BinaryExpression', {
   visitor: ['left', 'right'],
 });
-astDefinationsMap.set('ExpressionStatement', {
+astDefinitionsMap.set('ExpressionStatement', {
   visitor: ['expression'],
 });
-astDefinationsMap.set('CallExpression', {
+astDefinitionsMap.set('CallExpression', {
   visitor: ['callee', 'arguments'],
 });
 
 const validations = {};
 
-for (let name of astDefinationsMap.keys()) {
+for (let name of astDefinitionsMap.keys()) {
   validations[`is${name}`] = function (node) {
     return node.type === name;
   };
 }
 
 module.exports = {
-  visitorKeys: astDefinationsMap,
+  visitorKeys: astDefinitionsMap,
   ...validations,
 };

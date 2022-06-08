@@ -1,6 +1,16 @@
 const NodePath = require('./path/NodePath');
 const { visitorKeys } = require('../types');
 
+/**
+ *
+ * @param {Node} node
+ * @param {Visitors} visitors
+ * @param {Node} parent
+ * @param {NodePath} parentPath
+ * @param {string} key
+ * @param {number} listKey
+ * @returns
+ */
 function traverse(node, visitors, parent, parentPath, key, listKey) {
   const definition = visitorKeys.get(node.type);
   let visitorFuncs = visitors[node.type] || {};
